@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أداة تحديد العمر - Age Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="language-switcher">
+                <button class="lang-btn active" onclick="switchLanguage('ar')" data-lang="ar">
+                    <i class="fas fa-globe"></i>
+                    العربية
+                </button>
+                <button class="lang-btn" onclick="switchLanguage('en')" data-lang="en">
+                    <i class="fas fa-globe"></i>
+                    English
+                </button>
+            </div>
+            <h1 class="title" data-ar="أداة تحديد العمر" data-en="Age Calculator">
+                <i class="fas fa-birthday-cake"></i>
+                <span class="title-text">أداة تحديد العمر</span>
+            </h1>
+            <p class="subtitle" data-ar="احسب عمرك بدقة وسهولة" data-en="Calculate your age accurately and easily">احسب عمرك بدقة وسهولة</p>
+        </header>
+
+        <main class="main-content">
+            <div class="calculator-card">
+                <div class="input-section">
+                    <h2 data-ar="أدخل تاريخ الميلاد" data-en="Enter Birth Date">أدخل تاريخ الميلاد</h2>
+                    <div class="date-inputs">
+                        <div class="input-group">
+                            <label for="birthDate" data-ar="تاريخ الميلاد" data-en="Birth Date">تاريخ الميلاد</label>
+                            <input type="date" id="birthDate" max="2024-12-31">
+                            <small class="input-hint" data-ar="اختر تاريخ الميلاد من التقويم" data-en="Select birth date from calendar">اختر تاريخ الميلاد من التقويم</small>
+                        </div>
+                    </div>
+                    <div class="quick-dates">
+                        <h4 data-ar="تواريخ سريعة" data-en="Quick Dates">تواريخ سريعة</h4>
+                        <div class="quick-buttons">
+                            <button class="quick-btn" onclick="setQuickDate('today')" data-ar="اليوم" data-en="Today">اليوم</button>
+                            <button class="quick-btn" onclick="setQuickDate('yesterday')" data-ar="أمس" data-en="Yesterday">أمس</button>
+                            <button class="quick-btn" onclick="setQuickDate('week')" data-ar="منذ أسبوع" data-en="A Week Ago">منذ أسبوع</button>
+                            <button class="quick-btn" onclick="setQuickDate('month')" data-ar="منذ شهر" data-en="A Month Ago">منذ شهر</button>
+                            <button class="quick-btn" onclick="setQuickDate('year')" data-ar="منذ سنة" data-en="A Year Ago">منذ سنة</button>
+                        </div>
+                    </div>
+                    <button class="calculate-btn" onclick="calculateAge()">
+                        <i class="fas fa-calculator"></i>
+                        <span data-ar="احسب العمر" data-en="Calculate Age">احسب العمر</span>
+                    </button>
+                </div>
+
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <div class="result-card">
+                        <div id="birthdayGreeting" style="display:none;"></div>
+                        <div class="age-display">
+                            <div class="age-number" id="ageNumber">0</div>
+                            <div class="age-label" data-ar="سنة" data-en="Years">سنة</div>
+                        </div>
+                        <div class="age-details">
+                            <div class="detail-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span id="years">0</span> <span data-ar="سنة" data-en="Years">سنة</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-calendar-week"></i>
+                                <span id="months">0</span> <span data-ar="شهر" data-en="Months">شهر</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-calendar-day"></i>
+                                <span id="days">0</span> <span data-ar="يوم" data-en="Days">يوم</span>
+                            </div>
+                        </div>
+                        <div class="fun-facts" id="funFacts">
+                            <!-- Fun facts will be added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3 data-ar="ميزات إضافية" data-en="Additional Features">ميزات إضافية</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-heart"></i>
+                        <h4 data-ar="حاسبة نبض القلب" data-en="Heartbeat Calculator">حاسبة نبض القلب</h4>
+                        <p data-ar="احسب عدد نبضات قلبك في حياتك" data-en="Calculate your total heartbeats in life">احسب عدد نبضات قلبك في حياتك</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-moon"></i>
+                        <h4 data-ar="عدد الليالي" data-en="Number of Nights">عدد الليالي</h4>
+                        <p data-ar="كم ليلة نمت في حياتك؟" data-en="How many nights have you slept?">كم ليلة نمت في حياتك؟</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-sun"></i>
+                        <h4 data-ar="عدد الأيام" data-en="Number of Days">عدد الأيام</h4>
+                        <p data-ar="إجمالي الأيام التي عشتها" data-en="Total days you've lived">إجمالي الأيام التي عشتها</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-section">
+                <div class="support-card">
+                    <div class="support-header">
+                        <i class="fab fa-bitcoin"></i>
+                        <h3 data-ar="ادعم المشروع" data-en="Support the Project">ادعم المشروع</h3>
+                        <p data-ar="ساعدنا في تطوير المزيد من الميزات" data-en="Help us develop more features">ساعدنا في تطوير المزيد من الميزات</p>
+                    </div>
+                    <div class="bitcoin-address">
+                        <div class="address-container">
+                            <input type="text" id="bitcoinAddress" value="bc1qtaqumftzq92qdh78crazhv2m9452yhvm3ygthd" readonly>
+                            <button class="copy-btn" onclick="copyBitcoinAddress()">
+                                <i class="fas fa-copy"></i>
+                                <span data-ar="نسخ" data-en="Copy">نسخ</span>
+                            </button>
+                        </div>
+                        <div class="qr-code-container" style="display: flex; flex-direction: column; align-items: center;"></div>
+                    </div>
+                    <div class="support-options">
+                        <!-- Removed Bitcoin send and info buttons -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p data-ar="تم التطوير بحب بواسطة يحيى" data-en="Developed with love by Yahya">تم التطوير بحب بواسطة يحيى</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <audio id="birthdayAudio" src="birthday.mp3" preload="auto"></audio>
+</body>
+</html> 
